@@ -36,7 +36,7 @@ jobs:
           
   golangci-lint-master:
     permissions:
-      contents: read
+      contents: write
       actions: write
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
