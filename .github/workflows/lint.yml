@@ -71,4 +71,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
+          score_one=$(gh variable get LINT_THRESHOLD_SCORE_ONE)
+          echo "score_one: $score_one"
           gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
