@@ -9,7 +9,6 @@ on:
 permissions:
   contents: read
   pull-requests: write 
-  variables: write
 
 jobs:
   # This job runs on pull requests to check for new linting issues.
