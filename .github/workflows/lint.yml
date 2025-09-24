@@ -6,13 +6,12 @@ on:
   push:
     branches: [ main, master ]
 
-permissions:
-  contents: read
-  pull-requests: write
-  actions: write
-
 jobs:
   golangci-lint-pr:
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: write
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
