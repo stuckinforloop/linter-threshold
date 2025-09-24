@@ -29,61 +29,10 @@ jobs:
         uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00
         with:
           go-version-file: "./go.mod"
-
-      - name: Install golangci-lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.5.0
-
-
-      - name: Run Formatter
-        run: |
-          golangci-lint fmt
-
-      - name: Commit formatting changes
-        uses: stefanzweifel/git-auto-commit-action@3cc016cfc892e0844046da36fc68da4e525e081f
-        with:
-          commit_message: "style: apply automated formatting [skip ci]"
-          branch: ${{ github.head_ref }}
-          skip_dirty_check: false
-
+      
       - name: Run Linter
-        run: |
-          golangci-lint run --new-from-rev=origin/${{ github.base_ref }}
+        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
+        with:
+          version: v2.5
+          args: --new-from-rev=HEAD~
   
-  lint-format-master:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-        with:
-          # We need to fetch the full history to compare the PR branch with the base branch.
-          fetch-depth: 0
-          # Use a token that can push to protected branches
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Go
-        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00
-        with:
-          go-version-file: "./go.mod"
-
-      - name: Install golangci-lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.5.0
-
-      - name: Run Formatter
-        run: |
-          golangci-lint fmt
-
-      - name: Commit formatting changes
-        uses: stefanzweifel/git-auto-commit-action@3cc016cfc892e0844046da36fc68da4e525e081f
-        with:
-          commit_message: "style: apply automated formatting [skip ci]"
-          file_pattern: '.'
-          commit_user_name: github-actions[bot]
-          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          skip_dirty_check: false
-
-      - name: Run Linter
-        run: |
-          golangci-lint run
