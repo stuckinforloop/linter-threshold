@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil" // staticcheck: using deprecated package io/ioutil (SA1019)
 
-
 	"net/http"
 	"os"
 )
@@ -20,6 +19,10 @@ func anotherFunction() {
 	if f != nil {
 		defer f.Close()
 	}
+}
+
+func anotherUnusedFunction() {
+
 }
 
 // cyclop: function with high cyclomatic complexity
