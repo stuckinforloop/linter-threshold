@@ -31,14 +31,14 @@ jobs:
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
         with:
           version: latest
-          only-new-issues: pull_request
+          only-new-issues: true
           args: fmt
 
       - name: Run Linter
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
         with:
           version: latest
-          only-new-issues: pull_request
+          only-new-issues: true
           args: run
   
   lint-format-master:
@@ -60,11 +60,12 @@ jobs:
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
         with:
           version: latest
-          only-new-issues: push
+          only-new-issues: true
           args: fmt
 
       - name: Run Linter
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
         with:
           version: latest
-          only-new-issues: push
+          only-new-issues: true
+          args: run
