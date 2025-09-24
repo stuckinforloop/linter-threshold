@@ -33,11 +33,11 @@ jobs:
 
       - name: Run Formatter
         run: |
-          ./golangci-lint fmt
+          golangci-lint fmt
 
       - name: Run Linter
         run: |
-          ./golangci-lint run --new-from-rev=HEAD~
+          golangci-lint run --new-from-rev=HEAD~
   
   lint-format-master:
     if: github.event_name == 'push'
