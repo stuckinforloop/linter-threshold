@@ -33,7 +33,7 @@ jobs:
         with:
           version: v2.5
           args: --new-from-rev=origin/${{ github.base_ref }} --output.json.path=./errors.json
-          continue-on-error: true
+        continue-on-error: true
 
       - name: Calculate Score
         run: |
@@ -62,7 +62,7 @@ jobs:
         with:
           version: v2.5
           args: --output.json.path=./errors.json
-          continue-on-error: true
+        continue-on-error: true
       
       - name: Calculate Score
         run: |
