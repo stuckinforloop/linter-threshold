@@ -1,0 +1,57 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - asciicheck
+    - errcheck
+    - forcetypeassert
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - revive
+    - staticcheck
+    - unused
+  settings:
+    lll:
+      line-length: 100
+      tab-width: 1
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - path: (.+)\.go$
+        text: should have a package comment
+      - path: (.+)\.go$
+        text: 'unused-parameter:'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - goimports
+    - golines
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/razorpay/goutils)
+        - prefix(github.com/razorpay/<your_service_name>)
+      custom-order: true
+    golines:
+      max-len: 100
+      reformat-tags: false
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
