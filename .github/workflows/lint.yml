@@ -43,6 +43,8 @@ jobs:
           echo "count=$ERROR_COUNT" >> $GITHUB_OUTPUT
 
       - name: Set Threshold Score
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
           
