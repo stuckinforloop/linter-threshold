@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil" // staticcheck: using deprecated package io/ioutil (SA1019)
 
-
+	"net/http"
 	"os"
 )
 
@@ -19,6 +19,51 @@ func anotherFunction() {
 	if f != nil {
 		defer f.Close()
 	}
+}
+
+func anotherUnusedFunction() {
+
+}
+
+// cyclop: function with high cyclomatic complexity
+func highComplexity(a int) {
+	if a == 1 {
+		fmt.Println("one")
+	} else if a == 2 {
+		fmt.Println("two")
+	} else if a == 3 {
+		fmt.Println("three")
+	} else if a == 4 {
+		fmt.Println("four")
+	} else if a == 5 {
+		fmt.Println("five")
+	} else if a == 6 {
+		fmt.Println("six")
+	} else if a == 7 {
+		fmt.Println("seven")
+	} else if a == 8 {
+		fmt.Println("eight")
+	} else if a == 9 {
+		fmt.Println("nine")
+	} else {
+		fmt.Println("other")
+	}
+}
+
+// bodyclose: response body must be closed
+func bodyCloseError() {
+	resp, err := http.Get("https://example.com")
+	if err != nil {
+		return
+	}
+	// Missing resp.Body.Close()
+	fmt.Println(resp.Status)
+}
+
+// nakedret: naked return
+func nakedReturn(a int) (ret int) {
+	ret = a * 2
+	return
 }
 
 func main() {
@@ -50,6 +95,16 @@ func main() {
 
 	// staticcheck: using deprecated function
 	ioutil.ReadFile("test.txt") // SA1019
+
+	// goconst: string literal repeated
+	fmt.Println("repeated string")
+	fmt.Println("repeated string")
+
+	// prealloc: slice append in loop
+	var s []int
+	for i := 0; i < 10; i++ {
+		s = append(s, i)
+	}
 
 	// govet: unreachable code
 	return
