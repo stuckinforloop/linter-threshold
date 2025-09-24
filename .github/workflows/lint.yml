@@ -70,7 +70,24 @@ jobs:
       - name: Set Threshold Score
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          latest_score: ${{ steps.calculate.outputs.count }}
         run: |
-          score_one=$(gh variable get LINT_THRESHOLD_SCORE_ONE)
-          echo "score_one: $score_one"
-          gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
+          # Try to get the existing threshold value, redirecting errors to null
+          current_set_score=$(gh variable get LINT_THRESHOLD_SCORE 2>/dev/null)
+          
+          # Check the exit code of the last command ($?)
+          if [[ $? -ne 0 ]]; then
+            echo "Variable LINT_THRESHOLD_SCORE not found. Creating it with the latest score."
+            gh variable set LINT_THRESHOLD_SCORE --body "$latest_score"
+          else
+            echo "Current set score: $current_set_score"
+            echo "Latest score: $latest_score"
+            
+            # Compare the new score with the existing threshold value
+            if [[ "$latest_score" -lt "$current_set_score" ]]; then
+              echo "New score is lower. Updating the threshold value."
+              gh variable set LINT_THRESHOLD_SCORE --body "$latest_score"
+            else
+              echo "New score is not lower. Threshold value remains unchanged."
+            fi
+          fi
