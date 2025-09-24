@@ -32,20 +32,7 @@ jobs:
         with:
           version: v2.5
           args: --new-from-rev=origin/${{ github.base_ref }} --output.json.path=./errors.json
-        continue-on-error: true
 
-      - name: Calculate Score
-        id: calculate
-        run: |
-          ERROR_COUNT=$(cat ./errors.json | jq '.Issues | length')
-          echo "Number of linting errors found: $ERROR_COUNT"
-          echo "count=$ERROR_COUNT" >> $GITHUB_OUTPUT
-
-      - name: Set Threshold Score
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
           
   golangci-lint-master:
     permissions:
@@ -81,5 +68,7 @@ jobs:
           echo "count=$ERROR_COUNT" >> $GITHUB_OUTPUT
 
       - name: Set Threshold Score
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
