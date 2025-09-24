@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil" // staticcheck: using deprecated package io/ioutil (SA1019)
-
 	"net/http"
 	"os"
 )
@@ -11,18 +10,6 @@ import (
 // unused: this function is unused
 func unusedFunction() {
 	// revive: empty-block: this block is empty
-}
-
-func anotherFunction() {
-	// errcheck: error value not checked
-	f, _ := os.Open("another-file")
-	if f != nil {
-		defer f.Close()
-	}
-}
-
-func anotherUnusedFunction() {
-
 }
 
 // cyclop: function with high cyclomatic complexity
