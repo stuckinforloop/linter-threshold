@@ -48,6 +48,9 @@ jobs:
           gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
           
   golangci-lint-master:
+    permissions:
+      contents: read
+      actions: write
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
