@@ -40,6 +40,9 @@ jobs:
           ERROR_COUNT=$(cat ./errors.json | jq '.Issues | length')
           echo "Number of linting errors found: $ERROR_COUNT"
 
+      - name: Set Threshold Score
+        run: |
+          gh variable set LINT_THRESHOLD_SCORE --body $ERROR_COUNT
           
   golangci-lint-master:
     if: github.event_name == 'push'
