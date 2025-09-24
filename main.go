@@ -3,9 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil" // staticcheck: using deprecated package io/ioutil (SA1019)
-
 	"net/http"
-
 	"os"
 )
 
