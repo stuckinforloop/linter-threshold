@@ -36,6 +36,7 @@ jobs:
 
       - name: Get Score
         run: |
+          cat errors.json | jq '.Issues | length'
 
           
   golangci-lint-master:
