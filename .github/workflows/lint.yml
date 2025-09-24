@@ -36,13 +36,15 @@ jobs:
         continue-on-error: true
 
       - name: Calculate Score
+        id: calculate
         run: |
           ERROR_COUNT=$(cat ./errors.json | jq '.Issues | length')
           echo "Number of linting errors found: $ERROR_COUNT"
+          echo "count=$ERROR_COUNT" >> $GITHUB_OUTPUT
 
       - name: Set Threshold Score
         run: |
-          gh variable set LINT_THRESHOLD_SCORE --body $ERROR_COUNT
+          gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
           
   golangci-lint-master:
     if: github.event_name == 'push'
@@ -68,6 +70,12 @@ jobs:
         continue-on-error: true
       
       - name: Calculate Score
+        id: calculate
         run: |
           ERROR_COUNT=$(cat ./errors.json | jq '.Issues | length')
           echo "Number of linting errors found: $ERROR_COUNT"
+          echo "count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Set Threshold Score
+        run: |
+          gh variable set LINT_THRESHOLD_SCORE --body ${{ steps.calculate.outputs.count }}
