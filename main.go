@@ -13,6 +13,10 @@ var unusedVarTwo = ""
 
 var unusedVarThree = ""
 
+var unusedVarFour = ""
+
+var unusedVarFive = ""
+
 // unused: this function is unused
 func unusedFunction() {
 	// revive: empty-block: this block is empty
