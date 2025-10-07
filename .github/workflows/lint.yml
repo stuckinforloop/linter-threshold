@@ -31,7 +31,8 @@ jobs:
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9
         with:
           version: v2.5
-          args: --new-from-rev=origin/${{ github.base_ref }} --output.json.path=./errors.json
+          args: --new-from-rev=origin/${{ github.base_ref }}
+          problem-matchers: true
 
           
   golangci-lint-master:
