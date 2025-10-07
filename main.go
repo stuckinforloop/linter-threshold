@@ -7,6 +7,12 @@ import (
 	"os"
 )
 
+var unusedVar = ""
+
+var unusedVarTwo = ""
+
+var unusedVarThree = ""
+
 // unused: this function is unused
 func unusedFunction() {
 	// revive: empty-block: this block is empty
